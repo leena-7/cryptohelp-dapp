@@ -38,22 +38,21 @@ function fmt(n) {
   return "Rs." + n;
 }
 
-function Navbar({ account, onConnect, onStartCampaign, onLiveClick}) {
+function Navbar({ account, onConnect, onStartCampaign, onLiveClick }) {
   const [menuOpen, setMenuOpen] = useState(false);
-  const scrollTo = (id) => { document.getElementById(id)?.scrollIntoView({ behavior:"smooth" }); setMenuOpen(false); };
+  const scrollTo = (id) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    setMenuOpen(false);
+  };
   return (
     <header className="ch-navbar">
       <div className="ch-navbar-inner">
-        <div className="ch-logo" onClick={() => window.scrollTo({ top:0, behavior:"smooth" })}>
-          <div className="ch-logo-icon">CH</div>
-          <span className="ch-logo-text">CryptoHelp</span>
+        <div className="ch-logo" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
+          <img src="/src/assets/logo.png" alt="CryptoHelp" style={{ height: "90px", width: "240px", objectFit: "contain", cursor: "pointer" }} />
         </div>
         <nav className="ch-nav-links">
           <span className="ch-nav-link" onClick={() => scrollTo("campaigns")}>Campaigns</span>
-          <span className="ch-nav-link" onClick={onLiveClick} 
-            style={{color:"#00b37f", fontWeight:"600"}}>
-            🔴 Live Campaigns
-          </span>
+          <span className="ch-nav-link" onClick={onLiveClick} style={{ color: "#00b37f", fontWeight: "600" }}>🔴 Live Campaigns</span>
           <span className="ch-nav-link" onClick={() => scrollTo("categories")}>Categories</span>
           <span className="ch-nav-link" onClick={() => scrollTo("how-it-works")}>How It Works</span>
           <span className="ch-nav-link" onClick={() => scrollTo("ch-footer")}>About</span>
@@ -61,7 +60,7 @@ function Navbar({ account, onConnect, onStartCampaign, onLiveClick}) {
         <div className="ch-nav-actions">
           <button className="ch-btn-outline" onClick={onStartCampaign}>Start Campaign</button>
           <button className="ch-btn-primary" onClick={onConnect}>
-            💼 {account ? account.slice(0,6)+"..."+account.slice(-4) : "Connect Wallet"}
+            💼 {account ? account.slice(0, 6) + "..." + account.slice(-4) : "Connect Wallet"}
           </button>
         </div>
         <button className="ch-hamburger" onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? "✕" : "☰"}</button>
@@ -73,7 +72,7 @@ function Navbar({ account, onConnect, onStartCampaign, onLiveClick}) {
           <span className="ch-nav-link" onClick={() => scrollTo("how-it-works")}>How It Works</span>
           <button className="ch-btn-outline ch-btn-full" onClick={() => { onStartCampaign(); setMenuOpen(false); }}>Start Campaign</button>
           <button className="ch-btn-primary ch-btn-full" onClick={() => { onConnect(); setMenuOpen(false); }}>
-            💼 {account ? account.slice(0,6)+"..."+account.slice(-4) : "Connect Wallet"}
+            💼 {account ? account.slice(0, 6) + "..." + account.slice(-4) : "Connect Wallet"}
           </button>
         </div>
       )}
@@ -151,11 +150,11 @@ function CampaignsSection({ blockchainCampaigns, account,onConnect, onNote, onDo
             <h2 className="ch-section-title">{activeCategory ? `${activeCategory} Campaigns` : "Featured Campaigns"}</h2>
             <p className="ch-section-sub">{activeCategory ? `Showing campaigns in ${activeCategory}` : "Discover projects making a real impact."}</p>
           </div>
-          <div style={{display:"flex", gap:"10px", alignItems:"center"}}>
+          <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
             {activeCategory && (
-              <button className="ch-btn-outline" onClick={() => onClearFilter(null)} style={{borderColor:"#ef4444", color:"#ef4444"}}>✕ Clear Filter</button>
+              <button className="ch-btn-outline" onClick={() => onClearFilter(null)} style={{ borderColor: "#ef4444", color: "#ef4444" }}>✕ Clear Filter</button>
             )}
-            <button className="ch-btn-ghost">View All →</button>
+            <button className="ch-btn-ghost" onClick={() => onClearFilter(null)}>View All →</button>
           </div>
         </div>
 
@@ -246,7 +245,7 @@ function CampaignsSection({ blockchainCampaigns, account,onConnect, onNote, onDo
                       </button>
 
                       {/*Claim Refund */}
-                      {isExpired && !goalMet && account && ( 
+                      {isExpired && !( collected >= goal) && account && ( 
                       <button className="ch-btn-outline ch-btn-full ch-mt" 
                         style={{borderColor:"#f59e0b", color:"#f59e0b"}} 
                         onClick={() => onRefund(i)}> 
@@ -328,19 +327,18 @@ function Footer() {
         <div className="ch-footer-grid">
           <div className="ch-footer-brand">
             <div className="ch-footer-logo">
-              <div className="ch-logo-icon">CH</div>
-              <span className="ch-logo-text">CryptoHelp</span>
+              <img src="/src/assets/logo.png" alt="CryptoHelp" style={{ height: "100px", width: "220px", objectFit: "contain", objectPosition: "left", filter: "brightness(0) invert(1)" }} />
             </div>
             <p className="ch-footer-desc">Decentralized crowdfunding for a better world. Transparent, secure, and accessible to everyone.</p>
             <div className="ch-social-icons">
-              {["🐦","💻","💬"].map((s,i) => <div key={i} className="ch-social-icon">{s}</div>)}
+              {["🌍", "💻", "💬"].map((s, i) => <div key={i} className="ch-social-icon">{s}</div>)}
             </div>
           </div>
           {[
-            {title:"Platform", links:["Start Campaign","Explore","How It Works","Pricing"]},
-            {title:"Resources", links:["Documentation","API","Smart Contracts","Audit Reports"]},
-            {title:"Company", links:["About","Blog","Careers","Contact"]},
-            {title:"Legal", links:["Privacy Policy","Terms of Service","Cookie Policy"]},
+            { title: "Platform", links: ["Start Campaign", "Explore", "How It Works", "Pricing"] },
+            { title: "Resources", links: ["Documentation", "API", "Smart Contracts", "Audit Reports"] },
+            { title: "Company", links: ["About", "Blog", "Careers", "Contact"] },
+            { title: "Legal", links: ["Privacy Policy", "Terms of Service", "Cookie Policy"] },
           ].map(col => (
             <div key={col.title}>
               <h4 className="ch-footer-col-title">{col.title}</h4>
@@ -409,54 +407,78 @@ function NoteModal({ show, onClose, campaign, onSubmit, account }) {
   );
 }
 
-function CreateCampaignModal({ show, onClose, onSubmit }) {
-  const [form, setForm] = useState({title:"", description:"", category:"", goal:"", duration:"", image:""});
+function CreateCampaignModal({ show, onClose, onSubmit, showToast }) {
+  const [form, setForm] = useState({ title: "", description: "", category: "", goal: "", duration: "", image: "" });
+
   if (!show) return null;
+
+  const handleCreate = () => {
+    if (!form.title.trim()) {
+      showToast("⚠️ Please enter a campaign title!");
+      return;
+    }
+    if (!form.description.trim()) {
+      showToast("⚠️ Please enter a campaign description!");
+      return;
+    }
+    if (!form.category) {
+      showToast("⚠️ Please select a category!");
+      return;
+    }
+    if (!form.goal || parseFloat(form.goal) <= 0) {
+      showToast("⚠️ Please enter a valid funding goal!");
+      return;
+    }
+    if (!form.duration || parseInt(form.duration) <= 0) {
+      showToast("⚠️ Please enter a valid campaign duration!");
+      return;
+    }
+
+    onSubmit(form);
+    setForm({ title: "", description: "", category: "", goal: "", duration: "", image: "" });
+  };
+
   return (
-    <div className="ch-overlay" onClick={e => e.target===e.currentTarget && onClose()}>
+    <div className="ch-overlay" onClick={e => e.target === e.currentTarget && onClose()}>
       <div className="ch-modal ch-modal-lg">
         <button className="ch-modal-close" onClick={onClose}>✕</button>
         <h3 className="ch-modal-title">Create New Campaign</h3>
         <p className="ch-modal-sub">Launch your campaign on the blockchain. All fields are required.</p>
+
         <div className="ch-form-group">
-          <label className="ch-label">Campaign Title</label>
-          <input className="ch-input" placeholder="Enter a compelling title" value={form.title} onChange={e => setForm({...form, title:e.target.value})} />
+          <label className="ch-label">Campaign Title <span style={{ color: "#ef4444" }}>*</span></label>
+          <input className="ch-input" placeholder="Enter your campaign title" value={form.title} onChange={e => setForm({ ...form, title: e.target.value })} />
         </div>
         <div className="ch-form-group">
-          <label className="ch-label">Description</label>
-          <textarea className="ch-input ch-textarea" placeholder="Describe your campaign and its impact..." value={form.description} onChange={e => setForm({...form, description:e.target.value})} />
+          <label className="ch-label">Description <span style={{ color: "#ef4444" }}>*</span></label>
+          <textarea className="ch-input ch-textarea" placeholder="Describe your campaign and its impact..." value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} />
         </div>
         <div className="ch-form-group">
-          <label className="ch-label">Category</label>
-          <select className="ch-input" value={form.category} onChange={e => setForm({...form, category:e.target.value})}>
+          <label className="ch-label">Category <span style={{ color: "#ef4444" }}>*</span></label>
+          <select className="ch-input" value={form.category} onChange={e => setForm({ ...form, category: e.target.value })}>
             <option value="">Select a category</option>
             {CATEGORIES.map(c => <option key={c.slug} value={c.slug}>{c.name}</option>)}
           </select>
         </div>
         <div className="ch-form-group">
-          <label className="ch-label">Funding Goal (ETH)</label>
-          <input className="ch-input" type="number" placeholder="e.g. 0.5" value={form.goal} onChange={e => setForm({...form, goal:e.target.value})} />
+          <label className="ch-label">Funding Goal (ETH) <span style={{ color: "#ef4444" }}>*</span></label>
+          <input className="ch-input" type="number" placeholder="e.g. 0.5" value={form.goal} onChange={e => setForm({ ...form, goal: e.target.value })} />
         </div>
         <div className="ch-form-group">
-          <label className="ch-label">Campaign Duration (Days)</label>
-          <input className="ch-input" type="number" placeholder="e.g. 30" value={form.duration} onChange={e => setForm({...form, duration:e.target.value})} />
+          <label className="ch-label">Campaign Duration (Days) <span style={{ color: "#ef4444" }}>*</span></label>
+          <input className="ch-input" type="number" placeholder="e.g. 30" value={form.duration} onChange={e => setForm({ ...form, duration: e.target.value })} />
         </div>
         <div className="ch-form-group">
-          <label className="ch-label">Campaign Image URL (Optional)</label>
-          <input className="ch-input" placeholder="https://example.com/image.jpg" value={form.image} onChange={e => setForm({...form, image:e.target.value})} />
-          <p style={{fontSize:"0.75rem", color:"var(--text3)", marginTop:"6px"}}>
+          <label className="ch-label">Campaign Image URL <span style={{ color: "var(--text3)", fontSize: "0.8rem" }}>(Optional)</span></label>
+          <input className="ch-input" placeholder="https://example.com/image.jpg" value={form.image} onChange={e => setForm({ ...form, image: e.target.value })} />
+          <p style={{ fontSize: "0.75rem", color: "var(--text3)", marginTop: "6px" }}>
             💡 Upload your image to <a href="https://postimages.org/" target="_blank" rel="noopener noreferrer">postimages.org</a> and paste the direct link here
           </p>
         </div>
+
         <div className="ch-modal-btns">
           <button className="ch-btn-outline ch-btn-full" onClick={onClose}>Cancel</button>
-          <button className="ch-btn-primary ch-btn-full"
-            onClick={() => {
-              if(form.title && form.goal && form.duration) {
-                onSubmit(form);
-                setForm({title:"", description:"", category:"", goal:"", duration:"", image:""});
-              }
-            }}>
+          <button className="ch-btn-primary ch-btn-full" onClick={handleCreate}>
             Create Campaign →
           </button>
         </div>
@@ -464,6 +486,7 @@ function CreateCampaignModal({ show, onClose, onSubmit }) {
     </div>
   );
 }
+
 function DonorsModal({ show, onClose, donors }) {
   if (!show) return null;
   return (
@@ -548,7 +571,7 @@ function ConfirmModal({ show, onClose, onConfirm, title, message }) {
 function Toast({ show, msg }) {
   return (
     <div className={`ch-toast${show?" show":""}`}>
-      <span>✅</span><span>{msg}</span>
+      <span>{msg}</span>
     </div>
   );
 }
@@ -565,7 +588,7 @@ export default function App() {
   const [showCreate, setShowCreate] = useState(false);
   const [selectedCampaign, setSelectedCampaign] = useState(null);
   const [showConfirm, setShowConfirm] = useState(false);
-  const [campaignData, setCampaignData] = useState({title:"", message:"", onConfirm:null});
+  const [confirmData, setConfirmData] = useState({title:"", message:"", onConfirm:null});
   const [toast, setToast] = useState({ show:false, msg:"" });
   useEffect(() => { loadCampaignsPublic(); }, []);
   const showToast = (msg) => { setToast({show:true, msg}); setTimeout(() => setToast({show:false, msg:""}), 3500); };
@@ -576,7 +599,7 @@ export default function App() {
       setDonors(data);
       setShowDonors(true);
     } catch(err) {
-      showToast("Error loading donors: " + err.message);
+      showToast("Error loading donors");
     }
   };
 
@@ -653,9 +676,20 @@ export default function App() {
   const handleDelete = async (index, owner) => {
     if (!account) { showToast("Connect wallet first!"); return; }
     if (owner.toLowerCase() !== account.toLowerCase()) {
-      showToast("Only the campaign owner can delete it! ⚠️");
+      showToast("Only the campaign owner can delete it!");
       return;
     }
+
+    // Check if campaign is still active
+    const campaign = blockchainCampaigns[index];
+    const isActive = Date.now()/1000 < Number(campaign.deadline);
+    const hasFunds = parseFloat(ethers.formatEther(campaign.amountCollected)) > 0;
+
+    if (isActive && hasFunds) {
+      showToast("Campaign cannot be deleted while it has donations!");
+      return;
+    }
+
     setConfirmData({
       title: "Delete Campaign",
       message: "Are you sure you want to delete this campaign? This action cannot be undone!",
@@ -665,10 +699,14 @@ export default function App() {
           setLoading(true);
           const tx = await contract.deleteCampaign(index);
           await tx.wait();
-          showToast("Campaign deleted successfully! 🗑️");
+          showToast("Campaign deleted successfully!");
           loadCampaigns();
         } catch(err) {
-          showToast("Error: " + err.message);
+          if (err.message.includes("rejected")) {
+            showToast("Transaction cancelled");
+          } else {
+            showToast("Error deleting campaign. Try again!");
+          }
         } finally { setLoading(false); }
       }
     });
@@ -705,7 +743,7 @@ export default function App() {
     try {
       setLoading(true);
       const tx = await contract.claimRefund(index);
-      await tx.wait();
+      await tx.wait();cd
       showToast("Refund claimed successfully! 💰");
       loadCampaigns();
     } catch(err) {
@@ -755,8 +793,8 @@ export default function App() {
       </main>
       <Footer />
       <NoteModal show={showNote} onClose={() => setShowNote(false)} campaign={selectedCampaign} onSubmit={handleNoteSubmit} account={account} />
-      <CreateCampaignModal show={showCreate} onClose={() => setShowCreate(false)} onSubmit={handleCreateCampaign} />
-      <ConfirmModal show={showConfirm} onClose={() => setShowConfirm(false)} title={campaignData.title} message={campaignData.message}/>
+      <CreateCampaignModal show={showCreate} onClose={() => setShowCreate(false)} onSubmit={handleCreateCampaign} showToast={showToast} />
+      <ConfirmModal show={showConfirm} onClose={() => setShowConfirm(false)} onConfirm={confirmData.onConfirm} title={confirmData.title} message={confirmData.message}/>
       <Toast show={toast.show} msg={toast.msg} />
       {loading && (
         <div className="ch-loading-overlay">

@@ -84,7 +84,9 @@ contract Crowdfunding {
 
     function deleteCampaign(uint256 _id) public {
         require(_id < numberOfCampaigns, "Campaign does not exist");
+        require(campaigns[_id].owner != address(0), "Campaign does not exist");
         require(msg.sender == campaigns[_id].owner, "Only owner can delete");
+
         delete campaigns[_id];
     }
 
